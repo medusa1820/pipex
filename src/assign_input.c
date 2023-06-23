@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:00:46 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/23 17:25:16 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/23 19:33:16 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ char	*find_cmd_path(t_pipex *data, char **envp)
 	int		i;
 	char	*temp;
 
-	data->cmd1_split = ft_split(data->cmd1, ' ');
-	if (data->cmd1_split == NULL)
+	data->cmd1_args = ft_split(data->cmd1, ' ');
+	if (data->cmd1_args == NULL)
 		exit_error(4, "data.cmd1 split failed");
-	ft_printf("%s\n", data->cmd1_split[0]);
-	ft_printf("%s\n", data->cmd1_split[1]);
+	ft_printf("%s\n", data->cmd1_args[0]);
+	ft_printf("%s\n", data->cmd1_args[1]);
+	ft_printf("%s\n", data->cmd1_args[2]);
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
@@ -43,7 +44,7 @@ char	*find_cmd_path(t_pipex *data, char **envp)
 	i = 0;
 	while (data->paths[i])
 	{
-		temp = ft_strjoin("/", data->cmd1_split[0]);
+		temp = ft_strjoin("/", data->cmd1_args[0]);
 		cmd_path = ft_strjoin(data->paths[i], temp);
 		free(temp);
 		if (access(cmd_path, X_OK) != -1)

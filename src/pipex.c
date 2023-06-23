@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:48:43 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/23 17:25:46 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/23 20:34:14 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
-	char	*cmd_path;
 
 	if (argc != 5)
 	{
@@ -29,7 +28,11 @@ int	main(int argc, char **argv, char **envp)
 	assign_input(argv, &data);
 	data.cmd_path = find_cmd_path(&data, envp);
 	ft_printf("%s\n", data.cmd_path);
-
+	ft_printf("%s\n", data.cmd1_args[0]);
+	ft_printf("%s\n", data.cmd1_args[1]);
+	if (execve(data.cmd_path, data.cmd1_args, envp) == -1)
+		perror("Couldn't execute execve");
+	printf("This line will not be executed.\n");
 	return (0);
 }
 

@@ -3,8 +3,8 @@ NAME := pipex
 CC := gcc
 
 # CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
-# CFLAGS = -Wall -Werror -Wextra -g
-CFLAGS = -g
+CFLAGS = -Wall -Werror -Wextra -g
+# CFLAGS = -g
 LDFLAGS = -flto -O3 -march=nocona -g
 
 SRC_DIR	=	./src/

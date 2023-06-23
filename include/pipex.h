@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/23 16:46:35 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/23 19:10:59 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ typedef struct s_pipex
 	char	*outfile;
 	char	*cmd1;
 	char	*cmd2;
-	char	**cmd1_split;
-	char	**cmd2_split;
+	char	**cmd1_args;
 	char	**paths;
 	char	*cmd_path;
 }	t_pipex;

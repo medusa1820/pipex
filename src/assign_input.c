@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:00:46 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/23 19:33:16 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/25 20:50:28 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,41 +22,37 @@ void	assign_input(char **argv, t_pipex *data)
 
 char	*find_cmd_path(t_pipex *data, char **envp)
 {
-	char	*cmd_path;
+	char	*cmd_path_func;
 	int		i;
 	char	*temp;
 
 	data->cmd1_args = ft_split(data->cmd1, ' ');
 	if (data->cmd1_args == NULL)
-		exit_error(4, "data.cmd1 split failed");
-	ft_printf("%s\n", data->cmd1_args[0]);
-	ft_printf("%s\n", data->cmd1_args[1]);
-	ft_printf("%s\n", data->cmd1_args[2]);
+		exit_error(4, "data.cmd1 split failed", data);
+	// ft_printf("%s\n", data->cmd1_args[0]);
+	// ft_printf("%s\n", data->cmd1_args[1]);
+	// ft_printf("%s\n", data->cmd1_args[2]);
 	i = 0;
 	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
-	ft_printf("%s\n", envp[i]);
-	ft_printf("%s\n", (envp[i] + 5));
+	// ft_printf("%s\n", envp[i]);
+	// ft_printf("%s\n", (envp[i] + 5));
 	data->paths = ft_split((envp[i] + 5), ':');
-	i = 0;
-	while (data->paths[i])
-		ft_printf("%s\n", data->paths[i++]);
+	if (data->paths == NULL)
+		exit_error(5, "envp[i] split failed", data);
+	// i = 0;
+	// while (data->paths[i])
+	// 	ft_printf("%s\n", data->paths[i++]);
 	i = 0;
 	while (data->paths[i])
 	{
 		temp = ft_strjoin("/", data->cmd1_args[0]);
-		cmd_path = ft_strjoin(data->paths[i], temp);
+		cmd_path_func = ft_strjoin(data->paths[i], temp);
 		free(temp);
-		if (access(cmd_path, X_OK) != -1)
-			return (cmd_path);
-		free(cmd_path);
+		if (access(cmd_path_func, X_OK) != -1)
+			return (cmd_path_func);
+		free(cmd_path_func);
 		i++;
 	}
 	return (NULL);
-}
-
-void	exit_error(int exit_code, char *error_msg)
-{
-	ft_printf("%s\n", error_msg);
-	exit(exit_code);
 }

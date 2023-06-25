@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:48:43 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/23 20:34:14 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/25 21:47:07 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,41 @@
 int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
+	pid_t	pid;
 
 	if (argc != 5)
-	{
-		ft_printf("Usage: ./pipex infile \"cmd1\" \"cmd2\" outfile\n");
-		exit(1);
-	}
+		exit_error(1, "Usage: ./pipex infile \"cmd1\" \"cmd2\" outfile\n", &data);
+	pid = fork();
+	if (pid == -1)
+		return (-1);
 	data.fd_infile = open(argv[1], O_RDONLY);
 	data.fd_outfile = open(argv[4], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data.fd_infile < 0 || data.fd_outfile < 0)
 		exit(2);
 	assign_input(argv, &data);
 	data.cmd_path = find_cmd_path(&data, envp);
-	ft_printf("%s\n", data.cmd_path);
-	ft_printf("%s\n", data.cmd1_args[0]);
-	ft_printf("%s\n", data.cmd1_args[1]);
-	if (execve(data.cmd_path, data.cmd1_args, envp) == -1)
-		perror("Couldn't execute execve");
-	printf("This line will not be executed.\n");
+	if (data.cmd_path == NULL)
+		exit_error(127, "command not found", &data);
+	// ft_printf("%s\n", data.cmd_path);
+	// ft_printf("%s\n", data.cmd1_args[0]);
+	// ft_printf("%s\n", data.cmd1_args[1]);
+	if (pid == 0)
+	{
+		if (execve(data.cmd_path, data.cmd1_args, envp) == -1)
+		{
+			exit_error(126, "Couldn't execute execve", &data);
+			// free_all(&data);
+			// perror("Couldn't execute execve");
+		}
+	}
+	else
+	{
+		wait(NULL);
+		printf("This line will not be executed.\n");
+	}
+	// system("leaks pipex");
+	// while (1)
+	free_all(&data);
 	return (0);
 }
 
@@ -58,10 +75,6 @@ int	main(int argc, char **argv, char **envp)
 // 	return (NULL);
 // }
 
-
-
-
-
 /*
 
 	initialize_pipex(&pipex);
@@ -84,12 +97,6 @@ int	main(int argc, char **argv, char **envp)
 	return (pipex.exit_code);
 
 */
-
-
-
-
-
-
 
 /*
 

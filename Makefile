@@ -3,9 +3,8 @@ NAME := pipex
 CC := gcc
 
 # CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
-CFLAGS = -Wall -Werror -Wextra -g
-# CFLAGS = -g
-# LDFLAGS = -flto -O3 -march=nocona -g
+CFLAGS = -Wall -Werror -Wextra -g3
+LDFLAGS = -flto -O3 -march=nocona -g3
 
 SRC_DIR	=	./src/
 
@@ -51,7 +50,7 @@ $(NAME):
 	-o $(NAME)
 # $(CC) $(CFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
 	-o $(NAME)
-# $(CC) $(LDFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
+	$(CC) $(LDFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
 	-o $(NAME) -L ../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
-	$(CC) $(CFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
+# $(CC) $(CFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
 	-o $(NAME) -L ../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next

@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/25 20:56:43 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/28 21:19:52 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,23 @@ typedef struct s_pipex
 	char	*outfile;
 	char	*cmd1;
 	char	*cmd2;
+	int		pipe1_fd[2];
+	int		pipe2_fd2[2];
 	char	**cmd1_args;
 	char	**paths;
 	char	*cmd_path;
+	int		nr_of_cmds;
+	pid_t	pid1;
+	pid_t	pid2;
 }	t_pipex;
 
 // pipex.c
 int		main(int argc, char **argv, char **envp);
 
 // assign_input.c
-void	assign_input(char **argv, t_pipex *data);
-char	*find_cmd_path(t_pipex *data, char **envp);
+void	init_data(char **argv, t_pipex *data, int argc);
+void	pipe_and_fork(t_pipex *data);
+void	find_cmd_path(t_pipex *data, char **envp);
 
 //exit_error_free.c
 void	free_2d_str_func(char **str);
@@ -48,6 +54,8 @@ void	free_2d_str(t_pipex *data);
 void	free_str(t_pipex *data);
 void	free_all(t_pipex *data);
 void	exit_error(int exit_code, char *error_msg, t_pipex *data);
+void	close_in_out_file_fds(t_pipex *data);
+void	close_pipe_fds(t_pipex *data);
 
 // get_next_line.c
 char	*get_next_line(int fd);

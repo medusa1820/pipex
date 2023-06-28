@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/28 21:19:52 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/28 21:54:08 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ typedef struct s_pipex
 	char	*cmd1;
 	char	*cmd2;
 	int		pipe1_fd[2];
-	int		pipe2_fd2[2];
+	int		pipe2_fd[2];
 	char	**cmd1_args;
+	char	**cmd2_args;
 	char	**paths;
 	char	*cmd_path;
 	int		nr_of_cmds;
@@ -45,8 +46,10 @@ int		main(int argc, char **argv, char **envp);
 
 // assign_input.c
 void	init_data(char **argv, t_pipex *data, int argc);
-void	pipe_and_fork(t_pipex *data);
-void	find_cmd_path(t_pipex *data, char **envp);
+void	pipe_and_fork_1(t_pipex *data);
+void	pipe_and_fork_2(t_pipex *data);
+void	find_cmd_path_1(t_pipex *data, char **envp);
+void	find_cmd_path_2(t_pipex *data, char **envp);
 
 //exit_error_free.c
 void	free_2d_str_func(char **str);

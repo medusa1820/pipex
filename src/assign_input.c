@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:00:46 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/28 21:21:50 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/28 21:59:36 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_data(char **argv, t_pipex *data, int argc)
 	data->nr_of_cmds = argc - 3;
 }
 
-void	pipe_and_fork(t_pipex *data)
+void	pipe_and_fork_1(t_pipex *data)
 {
 	if (pipe(data->pipe1_fd) == -1)
 		exit_error(errno, "Pipe failed", data);
@@ -37,7 +37,16 @@ void	pipe_and_fork(t_pipex *data)
 		exit_error(errno, "Fork failed", data);
 }
 
-void	find_cmd_path(t_pipex *data, char **envp)
+void	pipe_and_fork_2(t_pipex *data)
+{
+	if (pipe(data->pipe2_fd) == -1)
+		exit_error(errno, "Pipe failed", data);
+	data->pid2 = fork();
+	if (data->pid2 == -1)
+		exit_error(errno, "Fork failed", data);
+}
+
+void	find_cmd_path_1(t_pipex *data, char **envp)
 {
 	char	*cmd_path_func;
 	int		i;
@@ -68,4 +77,38 @@ void	find_cmd_path(t_pipex *data, char **envp)
 	}
 	if (data->paths[i] == NULL)
 		exit_error(127, "Command not found", data);
+}
+
+
+void	find_cmd_path_2(t_pipex *data, char **envp)
+{
+	char	*cmd_path_func;
+	int		i;
+	char	*temp;
+
+	data->cmd2_args = ft_split(data->cmd2, ' ');
+	if (data->cmd2_args == NULL)
+		exit_error(4, "data.cmd2 split failed", data);
+	i = 0;
+	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+		i++;
+	data->paths = ft_split((envp[i] + 5), ':');
+	if (data->paths == NULL)
+		exit_error(5, "envp[i] split failed", data);
+	i = 0;
+	while (data->paths[i])
+	{
+		temp = ft_strjoin("/", data->cmd2_args[0]);
+		cmd_path_func = ft_strjoin(data->paths[i], temp);
+		free(temp);
+		if (access(cmd_path_func, X_OK) != -1)
+		{
+			data->cmd_path = cmd_path_func;
+			break ;
+		}
+		free(cmd_path_func);
+		i++;
+	}
+	if (data->paths[i] == NULL)
+		exit_error(130, "Command not found", data);
 }

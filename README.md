@@ -10,3 +10,4 @@ assign_input()
 4
 5
 
+./pipex infile "cat" "grep PATH" "grep usr/" "wc -c" outfile

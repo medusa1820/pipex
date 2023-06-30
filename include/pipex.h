@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/28 21:54:08 by musenov          ###   ########.fr       */
+/*   Updated: 2023/06/30 20:22:53 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ typedef struct s_pipex
 	int		fd_outfile;
 	char	*infile;
 	char	*outfile;
+	char	*cmd0;
 	char	*cmd1;
-	char	*cmd2;
+	int		pipe0_fd[2];
 	int		pipe1_fd[2];
-	int		pipe2_fd[2];
+	char	**cmd0_args;
 	char	**cmd1_args;
-	char	**cmd2_args;
 	char	**paths;
 	char	*cmd_path;
 	int		nr_of_cmds;
+	pid_t	pid0;
 	pid_t	pid1;
-	pid_t	pid2;
 }	t_pipex;
 
 // pipex.c
@@ -46,10 +46,11 @@ int		main(int argc, char **argv, char **envp);
 
 // assign_input.c
 void	init_data(char **argv, t_pipex *data, int argc);
+void	pipe_and_fork_0(t_pipex *data);
 void	pipe_and_fork_1(t_pipex *data);
-void	pipe_and_fork_2(t_pipex *data);
+void	find_cmd_path_0(t_pipex *data, char **envp);
 void	find_cmd_path_1(t_pipex *data, char **envp);
-void	find_cmd_path_2(t_pipex *data, char **envp);
+void	main_exec(t_pipex *data, int i, char **envp, char **argv, int argc);
 
 //exit_error_free.c
 void	free_2d_str_func(char **str);

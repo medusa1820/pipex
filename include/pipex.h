@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/02 15:26:01 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/02 17:18:56 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,13 @@ typedef struct s_pipex
 {
 	int		fd_infile;
 	int		fd_outfile;
-	// char	*infile;
-	// char	*outfile;
-	char	*cmd;
+	int		nr_of_cmds;
 	int		pipe0_fd[2];
 	int		pipe1_fd[2];
-	char	**cmd_split;
-	char	**paths;
-	char	*cmd_path;
-	int		nr_of_cmds;
+	char	*cmd;
+	char	**cmd_split; // malloc
+	char	**paths; // malloc
+	char	*cmd_path; // malloc
 	pid_t	pid;
 }	t_pipex;
 
@@ -63,7 +61,7 @@ void	close_pipe_fds(t_pipex *data);
 char	*get_next_line(int fd);
 
 //pid_funcs.c
-void	first_cmd(t_pipex *data, char **envp, int i);
+void	first_cmd(t_pipex *data, char **envp);
 void	middle_cmd(t_pipex *data, char **envp, int i);
 void	last_cmd(t_pipex *data, char **envp, int i);
 void	close_pipe0_fds(t_pipex *data);

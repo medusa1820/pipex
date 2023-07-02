@@ -6,11 +6,39 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 20:34:26 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/02 15:24:26 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/02 17:39:29 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	exit_error(int exit_code, char *error_msg, t_pipex *data)
+{
+	perror(error_msg);
+	free_all(data);
+	exit(exit_code);
+}
+
+void	free_all(t_pipex *data)
+{
+	free_str(data);
+	free_2d_str(data);
+}
+
+void	free_str(t_pipex *data)
+{
+	if (data->cmd_path != NULL)
+		free(data->cmd_path);
+	data->cmd_path = NULL;
+}
+
+void	free_2d_str(t_pipex *data)
+{
+	if (data->cmd_split != NULL)
+		free_2d_str_func(data->cmd_split);
+	if (data->paths != NULL)
+		free_2d_str_func(data->paths);
+}
 
 void	free_2d_str_func(char **str)
 {
@@ -23,50 +51,5 @@ void	free_2d_str_func(char **str)
 		i++;
 	}
 	free(str);
+	str = NULL;
 }
-
-void	free_2d_str(t_pipex *data)
-{
-	if (data->cmd_split != NULL)
-		free_2d_str_func(data->cmd_split);
-	if (data->paths != NULL)
-		free_2d_str_func(data->paths);
-}
-
-void	free_str(t_pipex *data)
-{
-	if (data->cmd_path != NULL)
-		free(data->cmd_path);
-}
-
-void	free_all(t_pipex *data)
-{
-	free_str(data);
-	free_2d_str(data);
-}
-
-void	exit_error(int exit_code, char *error_msg, t_pipex *data)
-{
-	// (void)exit_code;
-	perror(error_msg);
-	free_all(data);
-	// close_in_out_file_fds(data);
-	// close_pipe_fds(data);
-	exit(exit_code);
-}
-
-// void	close_in_out_file_fds(t_pipex *data)
-// {
-// 	if (data->fd_infile != -1)
-// 		close(data->fd_infile);
-// 	if (data->fd_outfile != -1)
-// 		close(data->fd_outfile);
-// }
-
-// void	close_pipe_fds(t_pipex *data)
-// {
-// 	if (data->pipe_fd[0] != -1)
-// 		close(data->pipe_fd[0]);
-// 	if (data->pipe_fd[1] != -1)
-// 		close(data->pipe_fd[1]);
-// }

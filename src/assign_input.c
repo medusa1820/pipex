@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:00:46 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/02 15:25:55 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/02 18:48:40 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ void	init_data(char **argv, t_pipex *data, int argc)
 	data->fd_infile = open(argv[1], O_RDONLY);
 	data->fd_outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (data->fd_infile < 0 || data->fd_outfile < 0)
-		exit_error(2, "Error openning file", data);
-	// data->infile = argv[1];
+		exit_error(errno, "Error openning file", data);
+	data->nr_of_cmds = argc - 3;
 	data->cmd = NULL;
-	// data->outfile = argv[argc - 1];
 	data->cmd_split = NULL;
 	data->paths = NULL;
 	data->cmd_path = NULL;
-	data->nr_of_cmds = argc - 3;
 }
 
 void	main_exec(t_pipex *data, int i, char **envp, char **argv)
@@ -47,7 +45,7 @@ void	main_exec(t_pipex *data, int i, char **envp, char **argv)
 	if (i == data->nr_of_cmds - 1)
 		last_cmd(data, envp, i);
 	else if (i == 0)
-		first_cmd(data, envp, i);
+		first_cmd(data, envp);
 	else
 		middle_cmd(data, envp, i);
 }
@@ -68,14 +66,15 @@ void	find_cmd_path_0(t_pipex *data, char **envp)
 		if (access(cmd_path_func, X_OK) != -1)
 		{
 			data->cmd_path = cmd_path_func;
-			printf("==================== THIS REACHED ====================\n");
+			// printf("==================== THIS REACHED ====================\n");
 			break ;
 		}
 		free(cmd_path_func);
 		i++;
 	}
 	if (data->paths[i] == NULL)
-		exit_error(127, "Command not found", data);
+		exit_error(0, "Command not found", data);
+		// exit_error(127, "zsh", data);
 }
 
 void	prepare_paths(t_pipex *data, char **envp)
@@ -86,7 +85,7 @@ void	prepare_paths(t_pipex *data, char **envp)
 	if (data->cmd_split == NULL)
 		exit_error(4, "data.cmd split failed", data);
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
+	while (ft_strnstr(envp[i], "PATH=/", 6) == 0)
 		i++;
 	data->paths = ft_split((envp[i] + 5), ':');
 	if (data->paths == NULL)

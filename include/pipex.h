@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/30 20:22:53 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/02 15:26:01 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,16 @@ typedef struct s_pipex
 {
 	int		fd_infile;
 	int		fd_outfile;
-	char	*infile;
-	char	*outfile;
-	char	*cmd0;
-	char	*cmd1;
+	// char	*infile;
+	// char	*outfile;
+	char	*cmd;
 	int		pipe0_fd[2];
 	int		pipe1_fd[2];
-	char	**cmd0_args;
-	char	**cmd1_args;
+	char	**cmd_split;
 	char	**paths;
 	char	*cmd_path;
 	int		nr_of_cmds;
-	pid_t	pid0;
-	pid_t	pid1;
+	pid_t	pid;
 }	t_pipex;
 
 // pipex.c
@@ -50,7 +47,8 @@ void	pipe_and_fork_0(t_pipex *data);
 void	pipe_and_fork_1(t_pipex *data);
 void	find_cmd_path_0(t_pipex *data, char **envp);
 void	find_cmd_path_1(t_pipex *data, char **envp);
-void	main_exec(t_pipex *data, int i, char **envp, char **argv, int argc);
+void	prepare_paths(t_pipex *data, char **envp);
+void	main_exec(t_pipex *data, int i, char **envp, char **argv);
 
 //exit_error_free.c
 void	free_2d_str_func(char **str);
@@ -63,5 +61,12 @@ void	close_pipe_fds(t_pipex *data);
 
 // get_next_line.c
 char	*get_next_line(int fd);
+
+//pid_funcs.c
+void	first_cmd(t_pipex *data, char **envp, int i);
+void	middle_cmd(t_pipex *data, char **envp, int i);
+void	last_cmd(t_pipex *data, char **envp, int i);
+void	close_pipe0_fds(t_pipex *data);
+void	close_pipe1_fds(t_pipex *data);
 
 #endif

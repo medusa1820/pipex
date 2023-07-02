@@ -1,1 +1,10 @@
-     308
+total 336
+-rw-r--r--  1 musenov  2022_heilbronn    1337 Jul  2 14:37 Makefile
+-rw-r--r--  1 musenov  2022_heilbronn     178 Jun 30 20:43 README.md
+drwxr-xr-x  4 musenov  2022_heilbronn     136 Jun 21 21:15 include
+-rw-r--r--  1 musenov  2022_heilbronn    3827 Jun 30 20:44 infile
+drwxr-xr-x  4 musenov  2022_heilbronn     136 Jun 21 21:12 lib
+-rw-r--r--  1 musenov  2022_heilbronn       0 Jul  2 15:24 outfile
+-rwxr-xr-x  1 musenov  2022_heilbronn  156176 Jul  2 15:24 pipex
+drwxr-xr-x  3 musenov  2022_heilbronn     102 Jun 21 21:37 pipex.dSYM
+drwxr-xr-x  8 musenov  2022_heilbronn     272 Jul  2 15:08 src

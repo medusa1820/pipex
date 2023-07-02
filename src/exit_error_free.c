@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 20:34:26 by musenov           #+#    #+#             */
-/*   Updated: 2023/06/30 20:49:13 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/02 15:24:26 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	free_2d_str_func(char **str)
 
 void	free_2d_str(t_pipex *data)
 {
-	if (data->cmd0_args != NULL)
-		free_2d_str_func(data->cmd0_args);
+	if (data->cmd_split != NULL)
+		free_2d_str_func(data->cmd_split);
 	if (data->paths != NULL)
 		free_2d_str_func(data->paths);
 }

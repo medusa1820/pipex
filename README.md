@@ -11,3 +11,34 @@ assign_input()
 5
 
 ./pipex infile "cat" "grep PATH" "grep usr/" "wc -c" outfile
+
+
+< infile grep PATH | grep usr | wc -c | exit 5 >  outfile    
+
+./pipex infile "grep PATH" "grep usr" "wc -c" "exit 5" outfile
+
+
+
+< assets/deepthought.txt | grep Now | exit 5 | outs/test-$num.txt > outs/test-$num-tty.txt 2>&1
+
+
+
+
+
+
+/**************/ this command redirects error to file errors:
+
+./pipex infile "grep PATH" "wc -c" "exit 5" outfile > errors 2>&1
+
+< infile grep PATH | wc -c | exit 5 > outfile > errors 2>&1
+
+
+
+
+
+test 10
+
+./pipex infile1 "grep PATH" "wc -c"  outfile > errors 2>&1
+< infile1 grep PATH | wc -c >  outfile > errors 2>&1  
+
+

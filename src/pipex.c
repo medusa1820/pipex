@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:48:43 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/02 20:30:14 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/03 22:34:56 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	data;
 	int		i;
+	int		status;
+	int		exit_code;
 
 	if (argc < 5)
 	{
@@ -31,8 +33,12 @@ int	main(int argc, char **argv, char **envp)
 		free_all(&data);
 		i++;
 	}
+	waitpid(data.pid, &status, 0);
+	if (WIFEXITED(status))
+		exit_code = WEXITSTATUS(status);
+	// printf("%d", exit_code);
 	// system("leaks pipex");
 	// while (1)
 	// free_all(&data);
-	return (0);
+	return (exit_code);
 }

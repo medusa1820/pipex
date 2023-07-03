@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/02 17:18:56 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/03 21:59:26 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	close_pipe_fds(t_pipex *data);
 char	*get_next_line(int fd);
 
 //pid_funcs.c
-void	first_cmd(t_pipex *data, char **envp);
+void	first_cmd(t_pipex *data, char **envp, char **argv);
 void	middle_cmd(t_pipex *data, char **envp, int i);
-void	last_cmd(t_pipex *data, char **envp, int i);
+void	last_cmd(t_pipex *data, char **envp, int i, char **argv);
 void	close_pipe0_fds(t_pipex *data);
 void	close_pipe1_fds(t_pipex *data);
 

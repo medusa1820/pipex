@@ -53,24 +53,71 @@ test 29
 < infile grep Now | /bin/cat > outfile errors 2>&1
 
 
+===============================================================================================================
 
 
-PIPEX MEDIC
+
+==============================				PIPEX MEDIC							===============================
+
+
+
+===============================================================================================================
+
 
 
 test(testSubset, testIndex, commandList, envp, inputFileContent);
 
-
 const t_test basicTests[] = {
-        { ARGS("grep Hello", "wc -l"), DEFAULT_ENV, "Hello World!\n" },
-        { ARGS("grep Hello", "wc -l"), DEFAULT_ENV, "Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\n" },
-        { ARGS("grep Hello", "ls -la src/"), DEFAULT_ENV, "Hello World!\n" },
-        { ARGS("ls -la src/", "wc -l"), DEFAULT_ENV, "Hello World!\n" },
-        { ARGS("grep Hello", "awk '{count++} END {print count}'"), DEFAULT_ENV, "Hello World!\nHello World!\n" },
-        { ARGS("grep Hello", "awk \"{count++} END {print count}\""), DEFAULT_ENV, "Hello World!\nHello World!\n" },
-        { ARGS("grep Hello", "awk '\"{count++} END {print count}\"'"), DEFAULT_ENV, "Hello World!\nHello World!\n" },
-        { ARGS("grep Hello", "awk \"'{count++} END {print count}'\""), DEFAULT_ENV, "Hello World!\nHello World!\n" }
-    };
+	{ ARGS("grep Hello", "wc -l"), DEFAULT_ENV, "Hello World!\n" },
+	{ ARGS("grep Hello", "wc -l"), DEFAULT_ENV, "Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\n" },
+	{ ARGS("grep Hello", "ls -la src/"), DEFAULT_ENV, "Hello World!\n" },
+	{ ARGS("ls -la src/", "wc -l"), DEFAULT_ENV, "Hello World!\n" },
+	{ ARGS("grep Hello", "awk '{count++} END {print count}'"), DEFAULT_ENV, "Hello World!\nHello World!\n" },
+	{ ARGS("grep Hello", "awk \"{count++} END {print count}\""), DEFAULT_ENV, "Hello World!\nHello World!\n" },
+	{ ARGS("grep Hello", "awk '\"{count++} END {print count}\"'"), DEFAULT_ENV, "Hello World!\nHello World!\n" },
+	{ ARGS("grep Hello", "awk \"'{count++} END {print count}'\""), DEFAULT_ENV, "Hello World!\nHello World!\n" }
+};
+
+infile1: "Hello World!\nHello World!\n"
+< infile1 grep Hello | awk '{count++} END {print count}' > outfile1
 
 
-(1) pipex-tester complete green passed (2) pipexMedic, basic tests: passed [1 - 4]
+
+
+const t_test errorTests[] = {
+	{ ARGS("grep Hello", "wc -l"), DEFAULT_ENV, NULL },
+	{ ARGS("grep Hello", "wc -l"), NULL_ENV, "Hello World!\n" },
+	{ ARGS("fizzBuzz", "ls -la src/"), DEFAULT_ENV, "Hello World!\n" },
+	{ ARGS("ls -la src/", "buzzFizz"), DEFAULT_ENV, "Hello World!\n" },
+	{ ARGS("fizzBuzz", "wc -l"), NULL_ENV, "Hello World!\n" },
+	{ ARGS("grep Hello", "buzzFizz"), NULL_ENV, "Hello World!\n" }
+};
+
+
+infile1: NULL
+< infile1 grep Hello | wc -l > outfile1
+./pipex infile1 "grep Hello" "wc -l" outfile1
+
+
+
+
+
+
+const t_test multiple_commandTests[] = {
+	{ ARGS("ls -la src/", "grep .c", "wc -l"), DEFAULT_ENV, "Hello World!\n" },
+	{ ARGS("tr -d !", "grep -v !", "sed 's/Hello/Salut/g'"), DEFAULT_ENV, "Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\n" },
+	{ ARGS("tr -d !", "grep -v !", "sed 's/Hello/Salut/g'", "grep Salut", "wc -l"), DEFAULT_ENV, "Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\n" }
+};
+
+
+
+
+infile1: Hello World!\n
+< infile1 ls -la src/ | grep .c | wc -l > outfile1
+./pipex infile1 "ls -la src/" "grep .c" "wc -l" outfile1
+
+
+
+infile1: Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\n
+< infile1 tr -d ! | grep -v ! | sed 's/Hello/Salut/g' > outfile1
+./pipex infile1 "tr -d !" "grep -v" "sed 's/Hello/Salut/g'" outfile1

@@ -42,3 +42,13 @@ test 10
 < infile1 grep PATH | wc -c >  outfile > errors 2>&1  
 
 
+
+
+
+
+test 29
+
+./pipex infile "grep Now" "$(which cat)" outfile > errors 2>&1
+
+< infile grep Now | /bin/cat > outfile errors 2>&1
+

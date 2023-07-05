@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 14:12:22 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/03 22:31:21 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 13:06:46 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	first_cmd(t_pipex *data, char **envp, char **argv)
 		close(data->fd_infile);
 		// close(data->fd_outfile);
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
-			exit_error(errno, "Couldn't execute execve()", data);
+			exit_error(errno, "Couldn't execute execve() first", data);
 		free_all(data);
 		// exit(0);
 	}
@@ -52,7 +52,7 @@ void	middle_cmd(t_pipex *data, char **envp, int i)
 		close_pipe1_fds(data);
 		// close(data->fd_outfile);
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
-			exit_error(errno, "Couldn't execute execve()", data);
+			exit_error(errno, "Couldn't execute execve() middle", data);
 		free_all(data);
 		// exit(0);
 	}
@@ -80,7 +80,7 @@ void	last_cmd(t_pipex *data, char **envp, int i, char **argv)
 		close_pipe1_fds(data);
 		close(data->fd_outfile);
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
-			exit_error(errno, "Couldn't execute execve()", data);
+			exit_error(errno, "Couldn't execute execve() last", data);
 		free_all(data);
 		// exit(0);
 	}

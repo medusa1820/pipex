@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:48:43 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/03 22:34:56 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:00:58 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,17 @@ int	main(int argc, char **argv, char **envp)
 	// while (1)
 	// free_all(&data);
 	return (exit_code);
+}
+
+void	init_data(char **argv, t_pipex *data, int argc)
+{
+	data->nr_of_cmds = argc - 3;
+	data->cmd = NULL;
+	data->cmd_split = NULL;
+	data->paths = NULL;
+	data->cmd_path = NULL;
+	// data->fd_infile = open(argv[1], O_RDONLY);
+	// data->fd_outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
+	// if (data->fd_infile < 0 || data->fd_outfile < 0)
+	// 	exit_error(0, "Error openning file", data);
 }

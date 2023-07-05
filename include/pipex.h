@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/03 21:59:26 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:03:00 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ typedef struct s_pipex
 
 // pipex.c
 int		main(int argc, char **argv, char **envp);
+void	init_data(char **argv, t_pipex *data, int argc);
 
 // assign_input.c
-void	init_data(char **argv, t_pipex *data, int argc);
-void	pipe_and_fork_0(t_pipex *data);
-void	pipe_and_fork_1(t_pipex *data);
-void	find_cmd_path_0(t_pipex *data, char **envp);
-void	find_cmd_path_1(t_pipex *data, char **envp);
-void	prepare_paths(t_pipex *data, char **envp);
 void	main_exec(t_pipex *data, int i, char **envp, char **argv);
+void	find_cmd_path_0(t_pipex *data, char **envp);
+void	prepare_cmd_split(t_pipex *data);
+void	prepare_paths(t_pipex *data, char **envp);
+void	prepare_cmd_path(t_pipex *data);
+void	prepare_cmd_path_slash(t_pipex *data);
 
 //exit_error_free.c
 void	free_2d_str_func(char **str);

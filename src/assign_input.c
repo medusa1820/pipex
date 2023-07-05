@@ -6,24 +6,11 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:00:46 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/03 22:30:42 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:05:30 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	init_data(char **argv, t_pipex *data, int argc)
-{
-	data->nr_of_cmds = argc - 3;
-	data->cmd = NULL;
-	data->cmd_split = NULL;
-	data->paths = NULL;
-	data->cmd_path = NULL;
-	// data->fd_infile = open(argv[1], O_RDONLY);
-	// data->fd_outfile = open(argv[argc - 1], O_CREAT | O_RDWR | O_TRUNC, 0644);
-	// if (data->fd_infile < 0 || data->fd_outfile < 0)
-	// 	exit_error(0, "Error openning file", data);
-}
 
 void	main_exec(t_pipex *data, int i, char **envp, char **argv)
 {
@@ -52,11 +39,59 @@ void	main_exec(t_pipex *data, int i, char **envp, char **argv)
 
 void	find_cmd_path_0(t_pipex *data, char **envp)
 {
-	char	*cmd_path_func;
-	int		i;
 	char	*temp;
+	char	*to_free;
 
-	prepare_paths(data, envp);
+	if (ft_strnstr(data->cmd, "/", ft_strlen(data->cmd)))
+	{
+		prepare_cmd_split(data);
+		prepare_paths(data, envp);
+		prepare_cmd_path_slash(data);
+	}
+	else if (ft_strnstr(data->cmd, "$(which", ft_strlen(data->cmd)))
+	{
+		data->cmd_split = ft_split(data->cmd, ') ');
+		if (data->cmd_split == NULL)
+			exit_error(errno, "data.cmd split failed", data);
+		temp = ft_strjoin(data->cmd_split[0], ")");
+		to_free = data->cmd_split[0];
+		data->cmd_split[0] = temp;
+		free(to_free);
+		data->cmd_path = data->cmd_split[0];
+	}
+	else
+	{
+		prepare_cmd_split(data);
+		prepare_paths(data, envp);
+		prepare_cmd_path(data);
+	}
+}
+
+void	prepare_cmd_split(t_pipex *data)
+{
+	data->cmd_split = ft_split(data->cmd, ' ');
+	if (data->cmd_split == NULL)
+		exit_error(4, "data.cmd split failed", data);
+}
+
+void	prepare_paths(t_pipex *data, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (ft_strnstr(envp[i], "PATH=/", 6) == 0)
+		i++;
+	data->paths = ft_split((envp[i] + 5), ':');
+	if (data->paths == NULL)
+		exit_error(5, "envp[i] split failed", data);
+}
+
+void	prepare_cmd_path(t_pipex *data)
+{
+	char	*cmd_path_func;
+	char	*temp;
+	int		i;
+
 	i = 0;
 	while (data->paths[i])
 	{
@@ -73,20 +108,22 @@ void	find_cmd_path_0(t_pipex *data, char **envp)
 	}
 	if (data->paths[i] == NULL)
 		exit_error(127, "Command not found", data);
-		// exit_error(127, "zsh", data);
 }
 
-void	prepare_paths(t_pipex *data, char **envp)
+void	prepare_cmd_path_slash(t_pipex *data)
 {
-	int	i;
+	int		i;
 
-	data->cmd_split = ft_split(data->cmd, ' ');
-	if (data->cmd_split == NULL)
-		exit_error(4, "data.cmd split failed", data);
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=/", 6) == 0)
+	while (data->paths[i])
+	{
+		if (access(data->cmd_split[0], X_OK) != -1)
+		{
+			data->cmd_path = data->cmd_split[0];
+			break ;
+		}
 		i++;
-	data->paths = ft_split((envp[i] + 5), ':');
-	if (data->paths == NULL)
-		exit_error(5, "envp[i] split failed", data);
+	}
+	if (data->paths[i] == NULL)
+		exit_error(127, "Command not found", data);
 }

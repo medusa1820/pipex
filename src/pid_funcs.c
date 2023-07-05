@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 14:12:22 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/05 13:06:46 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:41:54 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	first_cmd(t_pipex *data, char **envp, char **argv)
 		data->fd_infile = open(argv[1], O_RDONLY);
 		if (data->fd_infile < 0)
 			exit_error(errno, "Error openning file", data);
-		find_cmd_path_0(data, envp);
+		// find_cmd_path_0(data, envp);
+		// find_cmd_path_1(data, envp);
+		find_cmd_path_2(data, envp);
 		dup2(data->fd_infile, STDIN_FILENO);
 		dup2(data->pipe0_fd[1], STDOUT_FILENO);
 		close_pipe0_fds(data);
@@ -37,7 +39,9 @@ void	middle_cmd(t_pipex *data, char **envp, int i)
 {
 	if (data->pid == 0)
 	{
-		find_cmd_path_0(data, envp);
+		// find_cmd_path_0(data, envp);
+		// find_cmd_path_1(data, envp);
+		find_cmd_path_2(data, envp);
 		if (i % 2 == 0)
 		{
 			dup2(data->pipe1_fd[0], STDIN_FILENO);
@@ -70,7 +74,9 @@ void	last_cmd(t_pipex *data, char **envp, int i, char **argv)
 		O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (data->fd_outfile < 0)
 			exit_error(errno, "Error openning file", data);
-		find_cmd_path_0(data, envp);
+		// find_cmd_path_0(data, envp);
+		// find_cmd_path_1(data, envp);
+		find_cmd_path_2(data, envp);
 		if (i % 2 == 0)
 			dup2(data->pipe1_fd[0], STDIN_FILENO);
 		else

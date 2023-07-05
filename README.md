@@ -52,3 +52,25 @@ test 29
 
 < infile grep Now | /bin/cat > outfile errors 2>&1
 
+
+
+
+PIPEX MEDIC
+
+
+test(testSubset, testIndex, commandList, envp, inputFileContent);
+
+
+const t_test basicTests[] = {
+        { ARGS("grep Hello", "wc -l"), DEFAULT_ENV, "Hello World!\n" },
+        { ARGS("grep Hello", "wc -l"), DEFAULT_ENV, "Hello World!\nHello World!\nHello World!\nHello World!\nHello World!\n" },
+        { ARGS("grep Hello", "ls -la src/"), DEFAULT_ENV, "Hello World!\n" },
+        { ARGS("ls -la src/", "wc -l"), DEFAULT_ENV, "Hello World!\n" },
+        { ARGS("grep Hello", "awk '{count++} END {print count}'"), DEFAULT_ENV, "Hello World!\nHello World!\n" },
+        { ARGS("grep Hello", "awk \"{count++} END {print count}\""), DEFAULT_ENV, "Hello World!\nHello World!\n" },
+        { ARGS("grep Hello", "awk '\"{count++} END {print count}\"'"), DEFAULT_ENV, "Hello World!\nHello World!\n" },
+        { ARGS("grep Hello", "awk \"'{count++} END {print count}'\""), DEFAULT_ENV, "Hello World!\nHello World!\n" }
+    };
+
+
+(1) pipex-tester complete green passed (2) pipexMedic, basic tests: passed [1 - 4]

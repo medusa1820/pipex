@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/05 14:19:19 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 19:42:13 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,12 @@ void	init_data(t_pipex *data, int argc);
 // assign_input.c
 void	main_exec(t_pipex *data, int i, char **envp, char **argv);
 void	find_cmd_path_0(t_pipex *data, char **envp);
+void	find_cmd_path_1(t_pipex *data, char **envp);
+void	find_cmd_path_2(t_pipex *data, char **envp);
 void	prepare_cmd_split(t_pipex *data);
 void	prepare_paths(t_pipex *data, char **envp);
 void	prepare_cmd_path(t_pipex *data);
+void	prepare_cmd_path_0(t_pipex *data);
 void	prepare_cmd_path_slash(t_pipex *data);
 
 //exit_error_free.c

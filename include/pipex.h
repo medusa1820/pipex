@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/05 14:03:00 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:19:19 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ typedef struct s_pipex
 
 // pipex.c
 int		main(int argc, char **argv, char **envp);
-void	init_data(char **argv, t_pipex *data, int argc);
+// void	init_data(char **argv, t_pipex *data, int argc);
+void	init_data(t_pipex *data, int argc);
 
 // assign_input.c
 void	main_exec(t_pipex *data, int i, char **envp, char **argv);

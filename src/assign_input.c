@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:00:46 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/05 14:05:30 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:13:08 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	find_cmd_path_0(t_pipex *data, char **envp)
 	}
 	else if (ft_strnstr(data->cmd, "$(which", ft_strlen(data->cmd)))
 	{
-		data->cmd_split = ft_split(data->cmd, ') ');
+		data->cmd_split = ft_split(data->cmd, ')');
 		if (data->cmd_split == NULL)
 			exit_error(errno, "data.cmd split failed", data);
 		temp = ft_strjoin(data->cmd_split[0], ")");

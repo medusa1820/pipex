@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 20:48:43 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/05 14:00:58 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/05 14:19:49 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 		exit(1);
 	}
 		// exit_error(1, "Usage: ./pipex infile \"cmd1\" \"cmd2\" outfile\n", &data);
-	init_data(argv, &data, argc);
+	init_data(&data, argc);
 	i = 0;
 	while (i < argc - 3)
 	{
@@ -34,8 +34,12 @@ int	main(int argc, char **argv, char **envp)
 		i++;
 	}
 	waitpid(data.pid, &status, 0);
+	exit_code = 0;
 	if (WIFEXITED(status))
-		exit_code = WEXITSTATUS(status);
+	{
+		if (WEXITSTATUS(status))
+			exit_code = WEXITSTATUS(status);
+	}
 	// printf("%d", exit_code);
 	// system("leaks pipex");
 	// while (1)
@@ -43,7 +47,8 @@ int	main(int argc, char **argv, char **envp)
 	return (exit_code);
 }
 
-void	init_data(char **argv, t_pipex *data, int argc)
+// void	init_data(char **argv, t_pipex *data, int argc)
+void	init_data(t_pipex *data, int argc)
 {
 	data->nr_of_cmds = argc - 3;
 	data->cmd = NULL;

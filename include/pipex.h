@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/05 19:42:13 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/07 21:54:05 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "../lib/ft_printf/ft_printf.h"
 # include "../lib/ft_printf/libft/libft.h"
 # include "get_next_line.h"
+# include <stdbool.h>
 
 typedef struct s_pipex
 {
@@ -34,12 +35,16 @@ typedef struct s_pipex
 	char	**paths; // malloc
 	char	*cmd_path; // malloc
 	pid_t	pid;
+	bool	here_doc;
 }	t_pipex;
 
 // pipex.c
 int		main(int argc, char **argv, char **envp);
 // void	init_data(char **argv, t_pipex *data, int argc);
-void	init_data(t_pipex *data, int argc);
+void	init_data(t_pipex *data, int argc, char **argv);
+void	get_fd_infile(char **argv, t_pipex *data);
+void	here_doc_open(t_pipex *data, char **argv);
+void	get_fd_outfile(char **argv, t_pipex *data);
 
 // assign_input.c
 void	main_exec(t_pipex *data, int i, char **envp, char **argv);

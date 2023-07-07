@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:00:46 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/05 19:51:34 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/07 22:28:34 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,36 @@
 
 void	main_exec(t_pipex *data, int i, char **envp, char **argv)
 {
-	data->cmd = argv[i + 2];
+	if (data->here_doc)
+	{
+		// ft_printf("%d\n", 1);
+		data->cmd = argv[i + 3];
+		// if (i % 2 == 0)
+		// {
+		// 	if (pipe(data->pipe1_fd) == -1)
+		// 		exit_error(errno, "Pipe failed", data);
+		// }
+		// else
+		// {
+		// 	if (pipe(data->pipe0_fd) == -1)
+		// 		exit_error(errno, "Pipe failed", data);
+		// }
+	}
+	else
+	{
+		// ft_printf("%d\n", 2);
+		data->cmd = argv[i + 2];
+		// if (i % 2 == 0)
+		// {
+		// 	if (pipe(data->pipe0_fd) == -1)
+		// 		exit_error(errno, "Pipe failed", data);
+		// }
+		// else
+		// {
+		// 	if (pipe(data->pipe1_fd) == -1)
+		// 		exit_error(errno, "Pipe failed", data);
+		// }
+	}
 	if (i % 2 == 0)
 	{
 		if (pipe(data->pipe0_fd) == -1)

@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 20:34:26 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 18:44:40 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/08 19:19:09 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ void	exit_error(int exit_code, char *error_msg, t_pipex *data)
 	free_all(data);
 	exit(exit_code);
 }
+
+// void	exit_error(int exit_code, char *error_msg, t_pipex *data)
+// {
+// 	char	*error_msg1;
+
+// 	error_msg1 = ft_strjoin(error_msg, data->cmd_split[0]);
+// 	perror(error_msg1);
+// 	free(error_msg1);
+// 	free_all(data);
+// 	exit(exit_code);
+// }
 
 void	free_all(t_pipex *data)
 {

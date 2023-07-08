@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 17:35:38 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/08 18:45:01 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*get_next_line(int fd);
 void	get_fd_infile(char **argv, t_pipex *data);
 void	here_doc_open(t_pipex *data, char **argv);
 void	get_fd_outfile(char **argv, t_pipex *data);
+void	free_str1(char *str);
 
 // main.c
 int		main(int argc, char **argv, char **envp);

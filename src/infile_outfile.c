@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:58:33 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 17:17:59 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/08 18:54:33 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	get_fd_infile(char **argv, t_pipex *data)
 		exit_error(errno, "Error openning file", data);
 }
 
-
-
 void	here_doc_open(t_pipex *data, char **argv)
 {
 	char	*buffer;
@@ -37,10 +35,10 @@ void	here_doc_open(t_pipex *data, char **argv)
 	fd_here_doc = open("here_doc_file", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd_here_doc < 0)
 		exit_error(errno, "Error creating temporary here_doc_file", data);
-	while (1)
+	ft_putstr_fd("here_doc>", STDOUT_FILENO);
+	buffer = get_next_line(STDIN_FILENO);
+	while (buffer)
 	{
-		ft_putstr_fd("here_doc>", STDOUT_FILENO);
-		buffer = get_next_line(STDIN_FILENO);
 		if (ft_strlen(argv[2]) == ft_strlen(buffer) - 1 && \
 		!ft_strncmp(buffer, argv[2], ft_strlen(argv[2])))
 		{
@@ -49,45 +47,15 @@ void	here_doc_open(t_pipex *data, char **argv)
 			break ;
 		}
 		else
-		{
 			ft_putstr_fd(buffer, fd_here_doc);
-		}
 		free(buffer);
-	}
-	close(fd_here_doc);
-}
-
-/*
-
-void	here_doc_open(t_pipex *data, char **argv)
-{
-	char	*buffer;
-	int		fd_here_doc;
-
-	fd_here_doc = open("here_doc_file", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd_here_doc < 0)
-		exit_error(errno, "Error creating temporary here_doc_file", data);
-	while (1)
-	{
 		ft_putstr_fd("here_doc>", STDOUT_FILENO);
 		buffer = get_next_line(STDIN_FILENO);
-		if (ft_strlen(argv[2]) == ft_strlen(buffer) - 1 && \
-		!ft_strncmp(buffer, argv[2], ft_strlen(argv[2])))
-		{
-			free(buffer);
-			close(fd_here_doc);
-			break ;
-		}
-		else
-		{
-			ft_putstr_fd(buffer, fd_here_doc);
-		}
-		free(buffer);
 	}
 	close(fd_here_doc);
 }
 
-*/
+	// free_str1(buffer);
 
 void	get_fd_outfile(char **argv, t_pipex *data)
 {
@@ -104,3 +72,10 @@ void	get_fd_outfile(char **argv, t_pipex *data)
 	if (data->fd_outfile < 0)
 		exit_error(errno, "Error openning file", data);
 }
+
+// void	free_str1(char *str)
+// {
+// 	if (str != NULL)
+// 		free(str);
+// 	str = NULL;
+// }

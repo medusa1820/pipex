@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 20:34:26 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/03 20:42:29 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/08 18:44:40 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ void	free_all(t_pipex *data)
 	free_str(data);
 	free_2d_str(data);
 }
+
+// void	free_all(t_pipex *data)
+// {
+// 	free_str1(data->cmd_path);
+// 	free_2d_str_func(data->cmd_split);
+// 	free_2d_str_func(data->paths);
+// }
 
 void	free_str(t_pipex *data)
 {

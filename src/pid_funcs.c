@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 14:12:22 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 16:48:10 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/08 21:15:43 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	first_cmd(t_pipex *data, char **envp, char **argv)
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
 			exit_error(errno, "Couldn't execute execve() first", data);
 		free_all(data);
+		// system("leaks pipex");
 	}
 }
 
@@ -48,6 +49,7 @@ void	middle_cmd(t_pipex *data, char **envp, int i)
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
 			exit_error(errno, "Couldn't execute execve() middle", data);
 		free_all(data);
+		// system("leaks pipex");
 	}
 	if (i % 2 == 0)
 		close_pipe1_fds(data);
@@ -72,6 +74,7 @@ void	last_cmd(t_pipex *data, char **envp, int i, char **argv)
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
 			exit_error(errno, "Couldn't execute execve() last", data);
 		free_all(data);
+		// system("leaks pipex");
 	}
 	close_pipe0_fds(data);
 	close_pipe1_fds(data);

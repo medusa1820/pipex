@@ -1,6 +1,0 @@
-total 40
--rw-r--r--  1 musenov  2022_heilbronn  3280 Jul  5 14:13 assign_input.c
--rw-r--r--  1 musenov  2022_heilbronn  1506 Jul  3 20:42 exit_error_free.c
--rw-r--r--  1 musenov  2022_heilbronn  1411 Jun 21 21:15 get_next_line.c
--rw-r--r--  1 musenov  2022_heilbronn  3074 Jul  5 13:06 pid_funcs.c
--rw-r--r--  1 musenov  2022_heilbronn  2024 Jul  5 14:19 pipex.c

@@ -2,7 +2,7 @@ NAME := pipex
 
 CC := gcc
 
-# CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -W÷error -Wextra -g3 -fsanitize=address
 CFLAGS = -Wall -Werror -Wextra -g
 LDFLAGS = -flto -O3 -march=nocona -g
 
@@ -38,28 +38,31 @@ fclean: clean
 re: fclean all
 
 leaks:
-	@valgrind	--leak-check=full \
-				--show-leak-kinds=all \
-				--track-fds=yes \
+	@valgrind	--track-fds=yes \
+				--track-origins=yes \
+				--tool=memcheck \
 				--trace-children=yes \
-				./pipex infile "cat" "grep PATH" outfile
-	
-# -q \
-# --tool=memcheck \
-# --track-origins=yes \
-# --error-limit=no \
-# ./pipex infile "cat" "grep PATH" "grep usr/" "wc -c" outfile
-# ./pipex infile "cat" "grep PATH" "grep usr/" outfile
-# ./pipex infile "kd -l" "wc -l" outfile
+				--leak-check=full \
+				--show-leak-kinds=all \
+				-s \
+				./pipex infile "cat" "grep PATH" "grep /usr" outfile
 
 .PHONY: libft_printf all clean fclean re bonus leaks
 
 $(NAME):
+
+# $(CC) $(CFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
+	-o $(NAME) -L ../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
 # $(CC) $(LDFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
 	-o $(NAME)
 	$(CC) $(CFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
 	-o $(NAME)
 # $(CC) $(LDFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
 	-o $(NAME) -L ../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
-# $(CC) $(CFLAGS) $(addprefix $(SRC_DIR),$(SRC)) $(HEADER) $(LIBFT_PRINTF) \
-	-o $(NAME) -L ../LeakSanitizer -llsan -lc++ -Wno-gnu-include-next
+
+
+# -q \
+# --error-limit=no \
+# ./pipex infile "cat" "grep PATH" "grep usr/" "wc -c" outfile
+# ./pipex infile "cat" "grep PATH" "grep usr/" outfile
+# ./pipex infile "kd -l" "wc -l" outfile

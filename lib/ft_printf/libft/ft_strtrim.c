@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 19:40:00 by musenov           #+#    #+#             */
-/*   Updated: 2022/12/07 21:01:12 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/10 20:42:35 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,17 @@ char	*ft_strtrim(char const *s1, char const *set)
 	if (!s1 || !set)
 		return (0);
 	i = 0;
-	while (*(s1 + i) != '\0' && ft_strchr(set, *(s1 + i)) > 0)
+	while (*(s1 + i) != '\0' && ft_strchr(set, *(s1 + i)) != NULL)
 		i++;
 	left_trim = i;
 	i = ft_strlen(s1 + i);
-	while (i > 0 && ft_strchr(set, *(s1 + left_trim + i)) > 0)
+	while (i > 0 && ft_strchr(set, *(s1 + left_trim + i)) != NULL)
 		i--;
 	return (ft_substr((s1 + left_trim), 0, i + 1));
 }
+
+	// while (*(s1 + i) != '\0' && ft_strchr(set, *(s1 + i)) > 0)
+	// while (i > 0 && ft_strchr(set, *(s1 + left_trim + i)) > 0)
 
 /*
 

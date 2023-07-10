@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/10 17:13:20 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/10 21:33:51 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "../lib/ft_printf/libft/libft.h"
 # include "get_next_line.h"
 # include <stdbool.h>
+# include <string.h>
 
 typedef struct s_pipex
 {
@@ -60,6 +61,7 @@ void	get_fd_infile(char **argv, t_pipex *data);
 void	here_doc_open(t_pipex *data, char **argv);
 void	get_fd_outfile(char **argv, t_pipex *data);
 // void	free_str1(char *str);
+void	exit_error_cmd_notfound(int exit_code, char *error_msg, t_pipex *data);
 
 // main.c
 int		main(int argc, char **argv, char **envp);

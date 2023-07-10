@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 19:46:34 by musenov           #+#    #+#             */
-/*   Updated: 2022/12/06 00:09:47 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/10 20:39:25 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_calloc(size_t count, size_t size)
 	char	*str;
 	size_t	total_size;
 
-	if (size > 0 && (UINT64_MAX / size) < count)
+	if (size > 0 && (UINT_MAX / size) < count)
 		return (NULL);
 	total_size = count * size;
 	str = malloc(total_size);

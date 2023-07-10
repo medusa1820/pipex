@@ -20,11 +20,11 @@ HEADER = -I ./include -I ../LeakSanitizer
 LIBFT_PRINTF_DIR = ./lib/ft_printf
 LIBFT_PRINTF = ./lib/ft_printf/libftprintf.a
 
-libft_printf:
-	${MAKE} -C $(LIBFT_PRINTF_DIR) -j
-
 all: libft_printf
 	${MAKE} $(NAME) -j
+
+libft_printf:
+	${MAKE} -C $(LIBFT_PRINTF_DIR) -j
 
 bonus: all
 

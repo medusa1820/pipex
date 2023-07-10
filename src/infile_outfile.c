@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:58:33 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 18:54:33 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/10 21:41:57 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	here_doc_open(t_pipex *data, char **argv)
 	char	*buffer;
 	int		fd_here_doc;
 
-	fd_here_doc = open("here_doc_file", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	fd_here_doc = open("here_doc_file", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd_here_doc < 0)
 		exit_error(errno, "Error creating temporary here_doc_file", data);
 	ft_putstr_fd("here_doc>", STDOUT_FILENO);
@@ -79,3 +79,10 @@ void	get_fd_outfile(char **argv, t_pipex *data)
 // 		free(str);
 // 	str = NULL;
 // }
+
+void	exit_error_cmd_notfound(int exit_code, char *error_msg, t_pipex *data)
+{
+	ft_printf("%s%s: %s\n", error_msg, data->cmd_split[0], strerror(errno));
+	free_all(data);
+	exit(exit_code);
+}

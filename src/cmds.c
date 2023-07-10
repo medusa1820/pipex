@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 16:53:32 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 19:06:44 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/10 21:32:40 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	prepare_paths(t_pipex *data, char **envp)
 	int	i;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=/", 6) == 0)
+	while (ft_strnstr(envp[i], "PATH=", 5) == 0)
 		i++;
 	data->paths = ft_split((envp[i] + 5), ':');
 	if (data->paths == NULL)
@@ -62,7 +62,7 @@ void	prepare_cmd_path(t_pipex *data)
 		i++;
 	}
 	if (data->paths[i] == NULL)
-		exit_error(127, "Command not found: ", data);
+		exit_error_cmd_notfound(127, "Command not found: ", data);
 }
 
 void	prepare_cmd_path_slash(t_pipex *data)
@@ -70,5 +70,5 @@ void	prepare_cmd_path_slash(t_pipex *data)
 	if (access(data->cmd_split[0], X_OK) != -1)
 		data->cmd_path = data->cmd_split[0];
 	else
-		exit_error(127, "Command not found: ", data);
+		exit_error_cmd_notfound(127, "Command not found:", data);
 }

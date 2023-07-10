@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/02 14:12:22 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 21:15:43 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/10 16:58:14 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	first_cmd(t_pipex *data, char **envp, char **argv)
 		close(data->fd_infile);
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
 			exit_error(errno, "Couldn't execute execve() first", data);
-		free_all(data);
-		// system("leaks pipex");
 	}
 }
 
@@ -48,8 +46,6 @@ void	middle_cmd(t_pipex *data, char **envp, int i)
 		close_pipe1_fds(data);
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
 			exit_error(errno, "Couldn't execute execve() middle", data);
-		free_all(data);
-		// system("leaks pipex");
 	}
 	if (i % 2 == 0)
 		close_pipe1_fds(data);
@@ -73,12 +69,12 @@ void	last_cmd(t_pipex *data, char **envp, int i, char **argv)
 		close(data->fd_outfile);
 		if (execve(data->cmd_path, data->cmd_split, envp) == -1)
 			exit_error(errno, "Couldn't execute execve() last", data);
-		free_all(data);
-		// system("leaks pipex");
 	}
 	close_pipe0_fds(data);
 	close_pipe1_fds(data);
 }
+
+		// system("leaks pipex");
 
 void	close_pipe0_fds(t_pipex *data)
 {

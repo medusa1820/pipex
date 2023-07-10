@@ -2,9 +2,9 @@ NAME := pipex
 
 CC := gcc
 
-CFLAGS = -Wall -W÷error -Wextra -g3 -fsanitize=address
+# CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 CFLAGS = -Wall -Werror -Wextra -g
-LDFLAGS = -flto -O3 -march=nocona -g
+# LDFLAGS = -flto -O3 -march=nocona -g
 
 SRC_DIR	=	./src/
 
@@ -13,8 +13,7 @@ SRC		:=	cmds.c \
 			get_next_line.c \
 			infile_outfile.c \
 			main.c \
-			pid_funcs.c \
-			pipex.c
+			pid_funcs.c
 
 HEADER = -I ./include -I ../LeakSanitizer 
 

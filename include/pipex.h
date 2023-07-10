@@ -6,7 +6,7 @@
 /*   By: musenov <musenov@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 21:02:04 by musenov           #+#    #+#             */
-/*   Updated: 2023/07/08 18:45:01 by musenov          ###   ########.fr       */
+/*   Updated: 2023/07/10 17:13:20 by musenov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ typedef struct s_pipex
 	int		pipe0_fd[2];
 	int		pipe1_fd[2];
 	char	*cmd;
-	char	**cmd_split; // malloc
-	char	**paths; // malloc
-	char	*cmd_path; // malloc
+	char	**cmd_split;
+	char	**paths;
+	char	*cmd_path;
 	pid_t	pid;
 	bool	here_doc;
 }	t_pipex;
@@ -59,11 +59,12 @@ char	*get_next_line(int fd);
 void	get_fd_infile(char **argv, t_pipex *data);
 void	here_doc_open(t_pipex *data, char **argv);
 void	get_fd_outfile(char **argv, t_pipex *data);
-void	free_str1(char *str);
+// void	free_str1(char *str);
 
 // main.c
 int		main(int argc, char **argv, char **envp);
 void	init_data(t_pipex *data, int argc, char **argv);
+void	pipex(t_pipex *data, int i, char **envp, char **argv);
 
 // pid_funcs.c
 void	first_cmd(t_pipex *data, char **envp, char **argv);
@@ -71,8 +72,5 @@ void	middle_cmd(t_pipex *data, char **envp, int i);
 void	last_cmd(t_pipex *data, char **envp, int i, char **argv);
 void	close_pipe0_fds(t_pipex *data);
 void	close_pipe1_fds(t_pipex *data);
-
-// pipex.c
-void	pipex(t_pipex *data, int i, char **envp, char **argv);
 
 #endif
